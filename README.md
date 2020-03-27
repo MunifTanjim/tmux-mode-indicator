@@ -2,7 +2,19 @@
 
 Plugin that displays prompt indicating currently active Tmux mode.
 
-_This is a trimmed down version of the original [tmux-prefix-highlight](https://github.com/tmux-plugins/tmux-prefix-highlight) plugin._
+**Prefix Prompt**:  
+![Prefix Prompt](screenshots/prefix.png)
+
+**Copy Prompt**:  
+![Copy Prompt](screenshots/copy.png)
+
+**Sync Prompt**:  
+![Sync Prompt](screenshots/sync.png)
+
+**Empty Prompt**:  
+![Empty Prompt](screenshots/empty.png)
+
+_Note: This is a trimmed down version of the original [tmux-prefix-highlight](https://github.com/tmux-plugins/tmux-prefix-highlight) plugin._
 
 ## Usage
 
