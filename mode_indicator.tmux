@@ -2,16 +2,18 @@
 
 set -e
 
-mode_indicator_placeholder="\#{tmux_mode_indicator}"
+declare -r mode_indicator_placeholder="\#{tmux_mode_indicator}"
 
-prefix_prompt_config='@mode_indicator_prefix_prompt'
-copy_prompt_config='@mode_indicator_copy_prompt'
-sync_prompt_config='@mode_indicator_sync_prompt'
-empty_prompt_config='@mode_indicator_empty_prompt'
-prefix_mode_style_config='@mode_indicator_prefix_mode_style'
-copy_mode_style_config='@mode_indicator_copy_mode_style'
-sync_mode_style_config='@mode_indicator_sync_mode_style'
-empty_mode_style_config='@mode_indicator_empty_mode_style'
+declare -r prefix_prompt_config='@mode_indicator_prefix_prompt'
+declare -r copy_prompt_config='@mode_indicator_copy_prompt'
+declare -r sync_prompt_config='@mode_indicator_sync_prompt'
+declare -r empty_prompt_config='@mode_indicator_empty_prompt'
+declare -r custom_prompt_config="@mode_indicator_custom_prompt"
+declare -r prefix_mode_style_config='@mode_indicator_prefix_mode_style'
+declare -r copy_mode_style_config='@mode_indicator_copy_mode_style'
+declare -r sync_mode_style_config='@mode_indicator_sync_mode_style'
+declare -r empty_mode_style_config='@mode_indicator_empty_mode_style'
+declare -r custom_mode_style_config="@mode_indicator_custom_mode_style"
 
 tmux_option() {
   local -r option=$(tmux show-option -gqv "$1")
@@ -36,8 +38,12 @@ init_tmux_mode_indicator() {
     empty_style=$(indicator_style "$empty_mode_style_config" "bg=cyan,fg=black")
 
   local -r \
-    mode_prompt="#{?client_prefix,$prefix_prompt,#{?pane_in_mode,$copy_prompt,#{?pane_synchronized,$sync_prompt,$empty_prompt}}}" \
-    mode_style="#{?client_prefix,$prefix_style,#{?pane_in_mode,$copy_style,#{?pane_synchronized,$sync_style,$empty_style}}}"
+    custom_prompt="#(tmux show-option -gqv $custom_prompt_config)" \
+    custom_style="#(tmux show-option -gqv $custom_mode_style_config)"
+
+  local -r \
+    mode_prompt="#{?#{!=:$custom_prompt,},$custom_prompt,#{?client_prefix,$prefix_prompt,#{?pane_in_mode,$copy_prompt,#{?pane_synchronized,$sync_prompt,$empty_prompt}}}}" \
+    mode_style="#{?#{!=:$custom_style,},#[$custom_style],#{?client_prefix,$prefix_style,#{?pane_in_mode,$copy_style,#{?pane_synchronized,$sync_style,$empty_style}}}}"
 
   local -r mode_indicator="#[default]$mode_style$mode_prompt#[default]"
 
