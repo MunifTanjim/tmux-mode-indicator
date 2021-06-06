@@ -88,22 +88,22 @@ set -g @mode_indicator_empty_mode_style 'bg=cyan,fg=black'
 
 ### Custom Indicator
 
-You can override the indicator at any time by setting these variables:
+You can override the indicator at any time by setting these options:
 
 ```ini
 # prompt to display instead of default mode indicators
-set -g @mode_indicator_custom_prompt ' ---- '
+set @mode_indicator_custom_prompt ' ---- '
 
 # style values for custom prompt
-set -g @mode_indicator_custom_mode_style 'default'
+set @mode_indicator_custom_mode_style 'default'
 ```
 
-To revert back to the default mode indicators, unset those variables:
+To revert back to the default mode indicators, unset those options:
 
 ```ini
-set -gu @mode_indicator_custom_prompt
+set -u @mode_indicator_custom_prompt
 
-set -gu @mode_indicator_custom_mode_style
+set -u @mode_indicator_custom_mode_style
 ```
 
 ## License
