@@ -38,8 +38,8 @@ init_tmux_mode_indicator() {
     empty_style=$(indicator_style "$empty_mode_style_config" "bg=cyan,fg=black")
 
   local -r \
-    custom_prompt="#(tmux show-option -gqv $custom_prompt_config)" \
-    custom_style="#(tmux show-option -gqv $custom_mode_style_config)"
+    custom_prompt="#(tmux show-option -t #S -qv $custom_prompt_config)" \
+    custom_style="#(tmux show-option -t #S -qv $custom_mode_style_config)"
 
   local -r \
     mode_prompt="#{?#{!=:$custom_prompt,},$custom_prompt,#{?client_prefix,$prefix_prompt,#{?pane_in_mode,$copy_prompt,#{?pane_synchronized,$sync_prompt,$empty_prompt}}}}" \
