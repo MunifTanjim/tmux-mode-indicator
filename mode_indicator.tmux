@@ -23,7 +23,7 @@ tmux_option() {
 
 indicator_style() {
   local -r style=$(tmux_option "$1" "$2")
-  echo "${style:+#[${style/,/]#[}]}"
+  echo "${style:+#[${style//,/]#[}]}"
 }
 
 init_tmux_mode_indicator() {
