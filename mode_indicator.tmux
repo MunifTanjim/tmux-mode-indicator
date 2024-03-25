@@ -3,6 +3,7 @@
 set -e
 
 declare -r mode_indicator_placeholder="\#{tmux_mode_indicator}"
+declare -r mode_style_placeholder="\#{tmux_mode_style}"
 
 declare -r prefix_prompt_config='@mode_indicator_prefix_prompt'
 declare -r copy_prompt_config='@mode_indicator_copy_prompt'
@@ -47,10 +48,14 @@ init_tmux_mode_indicator() {
 
   local -r mode_indicator="#[default]$mode_style$mode_prompt#[default]"
 
-  local -r status_left_value="$(tmux_option "status-left")"
-  tmux set-option -gq "status-left" "${status_left_value/$mode_indicator_placeholder/$mode_indicator}"
+  local status_left_value="$(tmux_option "status-left")"
+  status_left_value="${status_left_value/$mode_indicator_placeholder/$mode_indicator}"
+  status_left_value="${status_left_value/$mode_style_placeholder/$mode_style}"
+  tmux set-option -gq "status-left" "$status_left_value"
 
-  local -r status_right_value="$(tmux_option "status-right")"
+  local status_right_value="$(tmux_option "status-right")"
+  status_right_value="${status_right_value/$mode_indicator_placeholder/$mode_indicator}"
+  status_right_value="${status_right_value/$mode_style_placeholder/$mode_style}"
   tmux set-option -gq "status-right" "${status_right_value/$mode_indicator_placeholder/$mode_indicator}"
 }
 
